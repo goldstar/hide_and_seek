@@ -17,3 +17,12 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 class ActiveSupport::TestCase
   extend MiniTest::Spec::DSL
 end
+
+module HideAndSeek::Expectations
+  infect_an_assertion :assert_difference, :must_change
+  infect_an_assertion :assert_no_difference, :wont_change
+end
+
+class Object
+  include HideAndSeek::Expectations
+end
