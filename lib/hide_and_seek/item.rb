@@ -10,8 +10,16 @@ class HideAndSeek::Item
     return false
   end
 
+  def hide
+    if $redis.set(key_name, Time.now) == "OK"
+      return true
+    end
+    return false
+  end
+
   def key_name
     "#{@item_name}-#{@user_identifier}"
   end
+
 
 end
