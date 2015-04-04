@@ -21,5 +21,16 @@ class HideAndSeek::Item
     "#{@item_name}-#{@user_identifier}"
   end
 
+  class << self 
+    def display?(item_name, user_identifier)
+      item = self.new item_name, user_identifier
+      item.display?
+    end
+
+    def hide(item_name, user_identifier)
+      item = self.new item_name, user_identifier
+      item.hide
+    end
+  end
 
 end

@@ -3,7 +3,7 @@ require './lib/hide_and_seek/item'
 
 describe HideAndSeek::Item do
   before do
-    $redis = double()
+    $redis = double(:exists => true, :set => "OK")
   end
 
   subject{HideAndSeek::Item.new "foo", 1}
@@ -39,6 +39,31 @@ describe HideAndSeek::Item do
     it "should return false if unsuccessful" do
       allow($redis).to receive(:set).and_return "FALSE"
       expect(subject.hide).to be false
+    end
+  end
+
+  describe "class methods" do
+    context "#display?" do
+      it "should instantiate an object" do
+        expect(HideAndSeek::Item).to receive(:new).with("foo", 1).and_return subject
+        HideAndSeek::Item.display?("foo", 1)
+      end
+      it "should call display" do
+        allow(HideAndSeek::Item).to receive(:new).with("foo", 1).and_return subject
+        expect(subject).to receive(:display?)
+        HideAndSeek::Item.display?("foo", 1)
+      end
+    end
+    context "#hide" do
+      it "should instantiate an object" do
+         expect(HideAndSeek::Item).to receive(:new).with("foo", 1).and_return subject
+        HideAndSeek::Item.hide("foo", 1)
+      end
+      it "should call hide" do
+        allow(HideAndSeek::Item).to receive(:new).with("foo", 1).and_return subject
+        expect(subject).to receive(:hide)
+        HideAndSeek::Item.hide("foo", 1)
+      end
     end
   end
 end
