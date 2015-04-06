@@ -133,7 +133,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack
-  combustion (~> 0.5.3)
+  combustion
   hide_and_seek!
   rspec-rails
   sqlite3

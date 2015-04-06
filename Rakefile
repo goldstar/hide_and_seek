@@ -3,6 +3,7 @@ begin
 rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
+Bundler.require
 
 require 'rdoc/task'
 
@@ -13,25 +14,21 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
-APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
-
-
-load 'rails/tasks/statistics.rake'
-
-
-
+ 
 Bundler::GemHelper.install_tasks
 
-require 'rake/testtask'
+require 'combustion'
+task :environment do
+  Combustion.initialize!
+end
+Combustion::Application.load_tasks
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+desc 'Default: run spec tests.'
+task :default => :spec
+
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = Dir.glob(['spec/hide_and_seek/**/*'])
+  spec.rspec_opts = ['--backtrace']
 end
 
-
-task default: :test
