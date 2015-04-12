@@ -3,7 +3,7 @@ module HideAndSeek
     isolate_namespace HideAndSeek
 
     config.generators do |g|
-      g.test_framework  :rspec
+      g.test_framework :rspec, :fixture => false
     end
 
     Engine.routes.draw do
