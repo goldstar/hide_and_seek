@@ -1,55 +1,67 @@
-require 'spec_helper'
-
-describe HideAndSeek::ItemsController, :type => :controller do
+RSpec.describe HideAndSeek::ItemsController, :type => :controller do
   routes { HideAndSeek::Engine.routes }
 
-  let(:current_user){double("User", :id => 1)}
+  let(:current_user){ double("User", :id => 1) }
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
   end
 
+  describe '#hide_and_seek' do
+    before { controller.params.merge!(item_name: 'foo') }
 
-  context "#show" do
-    it "should check hide_and_seek with the id and the current user" do
-      expect($hide_and_seek).to receive(:display?).with("foo", 1).and_return(true)
-      get :show, id: "foo", format: :json
+    context 'when a user_id parameter has not been provided' do
+      it "instantiates a HideAndSeek::Item for the current user" do
+        expect(HideAndSeek::Item).to receive(:new).with('foo', 1)
+        controller.hide_and_seek
+      end
     end
-    it "should render json display => true if successful" do
-      allow($hide_and_seek).to receive(:display?).and_return true
-      get :show, id: "foo", format: :json
-      expect(response.body).to eq([display: true].to_json)
-    end
-    it "should render json display => false if unsuccessful" do
-      allow($hide_and_seek).to receive(:display?).and_return false
-      get :show, id: "foo", format: :json
-      expect(response.body).to eq([display: false].to_json)
-    end
-    it "should params[:user_id] over current_user if sent" do
-      expect($hide_and_seek).to receive(:display?).with("foo", 9001).and_return(true)
-      get :show, id: "foo", format: :json, user_id: 9001
+
+    context 'when a user_id parameter has been provided' do
+      before { controller.params.merge!(user_id: 9001) }
+
+      it "instantiates a HideAndSeek::Item for the requested user" do
+        expect(HideAndSeek::Item).to receive(:new).with('foo', 9001)
+        controller.hide_and_seek
+      end
     end
   end
 
-  context "#update" do
-    it "should hide the item for the current_user" do
-      expect($hide_and_seek).to receive(:hide).with("foo", 1)
-      patch :update, id: "foo", format: :json
-    end
-    it "should render 200" do
-      allow($hide_and_seek).to receive(:hide).and_return true
-      patch :update, id: "foo", format: :json
-      expect(response.status).to eq(200)
-    end
-    it "should respond with 502 if it can't be saved." do
-      allow($hide_and_seek).to receive(:hide).and_return false
-      patch :update, id: "foo", format: :json
-      expect(response.status).to eq(502)
-    end
-    it "should params[:user_id] over current_user if sent" do
-      expect($hide_and_seek).to receive(:hide).with("foo", 9001).and_return(true)
-      patch :update, id: "foo", format: :json, user_id: 9001
+  describe "#show" do
+    it "should check hide_and_seek with the id and the current user" do
+      expect_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return(true)
+      get :show, item_name: "foo", format: :json
     end
 
+    it "should render json display => true if successful" do
+      allow_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return true
+      get :show, item_name: "foo", format: :json
+      expect(response.body).to eq([display: true].to_json)
+    end
+
+    it "should render json display => false if unsuccessful" do
+      allow_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return false
+      get :show, item_name: "foo", format: :json
+      expect(response.body).to eq([display: false].to_json)
+    end
+  end
+
+  describe "#update" do
+    it "should hide the item for the current_user" do
+      expect_any_instance_of(HideAndSeek::Item).to receive(:hide)
+      patch :update, item_name: "foo", format: :json
+    end
+
+    it "should render 200" do
+      allow_any_instance_of(HideAndSeek::Item).to receive(:hide).and_return true
+      patch :update, item_name: "foo", format: :json
+      expect(response.status).to eq(200)
+    end
+
+    it "should respond with 502 if it can't be saved." do
+      allow_any_instance_of(HideAndSeek::Item).to receive(:hide).and_return false
+      patch :update, item_name: "foo", format: :json
+      expect(response.status).to eq(502)
+    end
   end
 end
