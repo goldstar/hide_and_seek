@@ -8,8 +8,8 @@ class HideAndSeek::Item
   def display?(item_name, user_identifier)
     @item_name = item_name
     @user_identifier = user_identifier
-    return true if $redis.exists(key_name) == 1
-    return false
+    return false if $redis.exists(key_name)
+    return true
   end
 
   def hide(item_name, user_identifier)

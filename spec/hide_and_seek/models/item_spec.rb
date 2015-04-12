@@ -8,13 +8,13 @@ describe HideAndSeek::Item, :type => :model do
   subject{HideAndSeek::Item.new $redis}
 
   describe "#display?" do
-    it "should return true if key exists" do
-      allow($redis).to receive(:exists).with("foo-1").and_return 1
-      expect(subject.display?("foo", 1)).to be true
-    end
-    it "should return false if key doesn't exist" do
-      allow($redis).to receive(:exists).with("foo-1").and_return 0
+    it "should return false if key exists" do
+      allow($redis).to receive(:exists).with("foo-1").and_return true
       expect(subject.display?("foo", 1)).to be false
+    end
+    it "should return true if key doesn't exist" do
+      allow($redis).to receive(:exists).with("foo-1").and_return false
+      expect(subject.display?("foo", 1)).to be true
     end
   end
 
