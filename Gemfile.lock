@@ -95,6 +95,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     redis (3.2.1)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     rspec-core (3.2.2)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.0)
@@ -135,5 +137,6 @@ DEPENDENCIES
   actionpack
   combustion
   hide_and_seek!
+  redis-namespace
   rspec-rails
   sqlite3

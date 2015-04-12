@@ -15,17 +15,19 @@ describe HideAndSeek::ItemsController, :type => :controller do
       expect($hide_and_seek).to receive(:display?).with("foo", 1).and_return(true)
       get :show, id: "foo", format: :json
     end
-
     it "should render json display => true if successful" do
       allow($hide_and_seek).to receive(:display?).and_return true
       get :show, id: "foo", format: :json
       expect(response.body).to eq([display: true].to_json)
     end
-
     it "should render json display => false if unsuccessful" do
       allow($hide_and_seek).to receive(:display?).and_return false
       get :show, id: "foo", format: :json
       expect(response.body).to eq([display: false].to_json)
+    end
+    it "should params[:user_id] over current_user if sent" do
+      expect($hide_and_seek).to receive(:display?).with("foo", 9001).and_return(true)
+      get :show, id: "foo", format: :json, user_id: 9001
     end
   end
 
@@ -43,6 +45,10 @@ describe HideAndSeek::ItemsController, :type => :controller do
       allow($hide_and_seek).to receive(:hide).and_return false
       patch :update, id: "foo", format: :json
       expect(response.status).to eq(502)
+    end
+    it "should params[:user_id] over current_user if sent" do
+      expect($hide_and_seek).to receive(:hide).with("foo", 9001).and_return(true)
+      patch :update, id: "foo", format: :json, user_id: 9001
     end
 
   end

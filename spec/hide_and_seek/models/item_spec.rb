@@ -9,11 +9,11 @@ describe HideAndSeek::Item, :type => :model do
 
   describe "#display?" do
     it "should return true if key exists" do
-      allow($redis).to receive(:exists).with("foo-1").and_return 1 
-      expect(subject.display?("foo", 1)).to be true 
+      allow($redis).to receive(:exists).with("foo-1").and_return 1
+      expect(subject.display?("foo", 1)).to be true
     end
     it "should return false if key doesn't exist" do
-      allow($redis).to receive(:exists).with("foo-1").and_return 0 
+      allow($redis).to receive(:exists).with("foo-1").and_return 0
       expect(subject.display?("foo", 1)).to be false
     end
   end
