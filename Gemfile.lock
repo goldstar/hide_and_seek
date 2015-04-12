@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     hide_and_seek (0.0.1)
-      rails (~> 4)
+      rails (~> 4.2.0)
       redis
 
 GEM

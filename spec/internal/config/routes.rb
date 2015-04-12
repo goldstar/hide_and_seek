@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount HideAndSeek::Engine, at: "/hide_and_seek"
+  mount HideAndSeek::Engine => "/hide_and_seek"
 end
