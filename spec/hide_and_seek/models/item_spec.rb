@@ -36,4 +36,11 @@ RSpec.describe HideAndSeek::Item, :type => :model do
       expect(item.hide).to be false
     end
   end
+
+  describe "#unhide" do
+    it "should return true if successfully deletes key" do
+      expect(storage).to receive(:del).with("foo-1")
+      item.unhide
+    end
+  end
 end

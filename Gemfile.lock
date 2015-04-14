@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hide_and_seek (0.0.4)
+    hide_and_seek (0.0.6)
       rails (~> 4)
       redis
 

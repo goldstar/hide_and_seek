@@ -19,6 +19,10 @@ class HideAndSeek::Item
     return false
   end
 
+  def unhide
+    storage.del(key_name)
+  end
+
   def key_name
     "#{item_name}-#{user_identifier}"
   end
