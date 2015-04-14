@@ -7,7 +7,7 @@ module HideAndSeek
     end
 
     Engine.routes.draw do
-      resources :items, only: [:show, :update]
+      resources :items, only: [:show, :update], param: :item_name
     end
   end
 end
