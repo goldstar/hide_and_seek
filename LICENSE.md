@@ -1,4 +1,9 @@
-Copyright 2015 BJ Clark
+# hide_and_seek
+* Author:: BJ Clark (bjclark@goldstar.com)
+* Copyright:: Copyright (c) 2015 Goldstar Events, Inc.
+* License:: MIT
+
+Copyright (c) 2015 Goldstar Events, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
