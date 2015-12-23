@@ -61,11 +61,11 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitest (5.5.1)
     multi_json (1.11.0)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7.1)
+      mini_portile2 (~> 2.0.0.rc2)
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -140,3 +140,6 @@ DEPENDENCIES
   redis-namespace
   rspec-rails
   sqlite3
+
+BUNDLED WITH
+   1.10.6
