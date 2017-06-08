@@ -1,0 +1,17 @@
+machine:
+  ruby:
+    version: 2.3.4
+
+database:
+  override:
+    - echo "no db for you"
+
+test:
+  override:
+    - bundle exec rspec spec
+
+dependencies:
+  override:
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=1 --retry=3
+  cache_directories:
+    - vendor/bundle

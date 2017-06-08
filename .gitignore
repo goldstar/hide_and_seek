@@ -1,2 +1,3 @@
 test.log
 *.gem
+*.sqlite3

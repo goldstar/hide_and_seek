@@ -7,6 +7,7 @@
 default: &default
   adapter: sqlite3
   pool: 5
+  database: db/test.sqlite3
   timeout: 5000
 
 development:
