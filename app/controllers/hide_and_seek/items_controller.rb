@@ -25,7 +25,6 @@ module HideAndSeek
     def hide_and_seek
       @hide_and_seek ||= HideAndSeek::Item.new(params[:item_name], user_identifier)
     end
-    hide_action :hide_and_seek
 
     private
 
