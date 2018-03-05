@@ -30,18 +30,18 @@ RSpec.describe HideAndSeek::ItemsController, :type => :controller do
   describe "#show" do
     it "should check hide_and_seek with the id and the current user" do
       expect_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return(true)
-      get :show, item_name: "foo", format: :json
+      get :show, params: { item_name: "foo", format: :json }
     end
 
     it "should render json display => true if successful" do
       allow_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return true
-      get :show, item_name: "foo", format: :json
+      get :show, params: { item_name: "foo", format: :json }
       expect(response.body).to eq([display: true].to_json)
     end
 
     it "should render json display => false if unsuccessful" do
       allow_any_instance_of(HideAndSeek::Item).to receive(:display?).and_return false
-      get :show, item_name: "foo", format: :json
+      get :show, params: { item_name: "foo", format: :json }
       expect(response.body).to eq([display: false].to_json)
     end
   end
@@ -49,18 +49,18 @@ RSpec.describe HideAndSeek::ItemsController, :type => :controller do
   describe "#update" do
     it "should hide the item for the current_user" do
       expect_any_instance_of(HideAndSeek::Item).to receive(:hide)
-      patch :update, item_name: "foo", format: :json
+      patch :update, params: { item_name: "foo", format: :json }
     end
 
     it "should render 200" do
       allow_any_instance_of(HideAndSeek::Item).to receive(:hide).and_return true
-      patch :update, item_name: "foo", format: :json
+      patch :update, params: { item_name: "foo", format: :json }
       expect(response.status).to eq(200)
     end
 
     it "should respond with 502 if it can't be saved." do
       allow_any_instance_of(HideAndSeek::Item).to receive(:hide).and_return false
-      patch :update, item_name: "foo", format: :json
+      patch :update, params: { item_name: "foo", format: :json }
       expect(response.status).to eq(502)
     end
   end
