@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :test do
+group :development, :test do
   gem 'combustion'
-  gem 'actionpack' # action_controller, action_view
+  gem 'actionpack'
 end
