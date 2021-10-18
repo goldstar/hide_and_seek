@@ -1,6 +1,23 @@
-version: 2
+version: 2.1
+
+orbs:
+  gem: goldstar/publish-gem@1.0.1
+
+workflows:
+  main:
+    jobs:
+      - test
+      - gem/build-and-deploy:
+          context: packagecloud
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+          packagecloud-repo: goldstar/production
+
 jobs:
-  build:
+  test:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.5-node-browsers
@@ -11,9 +28,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "hide_and_seek.gemspec" }}
+          - hide-and-seek-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - hide-and-seek-
 
       - run:
           name: install dependencies
@@ -21,9 +38,9 @@ jobs:
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
+          key: hide-and-seek-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "hide_and_seek.gemspec" }}
 
       # run tests!
       - run: bundle exec rspec spec
