@@ -17,13 +17,14 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'rails', '~> 5.2.6'
+  s.add_dependency 'rails', '~> 6.0.0'
   s.add_dependency 'sprockets', '~>3.0'
   s.add_dependency 'redis'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'mail'
   s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency "rspec_junit_formatter"
   s.add_development_dependency 'combustion'
   s.add_development_dependency 'redis-namespace'
 
